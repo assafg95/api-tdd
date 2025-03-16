@@ -8,4 +8,8 @@ router.get('/', function(req, res, next) {
   res.json(todos);
 });
 
+router.get('/:id', function(req, res, next) {
+    const foundTodo = todos.find(todo => todo.id === parseInt(req.params.id));
+    res.json(foundTodo);
+});
 module.exports = router;
