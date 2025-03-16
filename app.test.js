@@ -19,16 +19,41 @@ describe("Todos API", () => {
             });
     });
     it('GET /todos/id --> specific todo by Id', () => {
-
+        return request(app)
+            .get('/todos/1')
+            .expect(200)
+            .expect('Content-Type', /json/)
+            .then(response => {
+                expect(response.body).toEqual(
+                    
+                    expect.objectContaining({
+                        name: expect.any(String),
+                        completed: expect.any(Boolean)
+                    })
+                    
+                );
+            });
     });
     it('Get /todos/id --> 404 if todo not found', () => {
-
+        return request(app).get('/todos/9999999').expect(404);
     });
     it('POST /todos --> add a new todo', () => {
-
+        return request(app).post('/todos').send({
+            name: 'Do dishes'
+            
+        }).expect(201).expect('Content-Type', /json/).then(
+            response => {
+                expect(response.body).toEqual(
+                    expect.objectContaining({
+                        name: 'Do dishes',
+                        completed: false
+                    })
+                );
+            }
+        )
     });
     it('GET /todos --> validates request body', () => {
-
+        return request(app).post('/todos').send({ name: 123 }).expect(422);
     });
     
 });
