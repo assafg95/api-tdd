@@ -17,4 +17,20 @@ router.get('/:id', function(req, res, next) {
     }
     res.json(foundTodo);
 });
+
+router.post('/', function(req, res, next) {
+    if(!req.body.name) {
+        return next(createError(422, "Name is required"));
+    }
+    if(typeof req.body.name !== 'string') {
+        return next(createError(422, "Validation Error - Name must be a string"));
+    }
+    const newTodo = {
+        id: todos.length + 1,
+        name: req.body.name,
+        completed: false
+    };
+    todos.push(newTodo);
+    res.status(201).json(newTodo);
+});
 module.exports = router;

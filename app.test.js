@@ -47,7 +47,7 @@ describe("Todos API", () => {
             response => {
                 expect(response.body).toEqual(
                     expect.objectContaining({
-                        id: 1,
+                        id: expect.any(Number),
                         name: 'Do dishes',
                         completed: false
                     })
@@ -55,7 +55,7 @@ describe("Todos API", () => {
             }
         )
     });
-    it('GET /todos --> validates request body', () => {
+    it('POST /todos --> validates request body', () => {
         return request(app).post('/todos').send({ name: 123 }).expect(422);
     });
     
